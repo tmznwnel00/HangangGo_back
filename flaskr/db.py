@@ -5,7 +5,7 @@ from firebase_admin import storage
 from datetime import datetime
 
 cred = credentials.Certificate(
-    "hanganggo-88a45-firebase-adminsdk-97702-c4faccd7b0.json"
+    "hanganggo-88a45-firebase-adminsdk-97702-1f415b24ed.json"
 )
 
 firebase_admin.initialize_app(

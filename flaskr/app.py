@@ -3,6 +3,8 @@ from firebase_admin import storage
 from flaskr.db import bucket, species_map, collection
 import sys
 import os
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+from SpeciesClassification import classify_images
 
 app = Flask(__name__)
 
@@ -17,19 +19,16 @@ def upload_image():
     image = request.files["image"]
     _, image_extension = os.path.splitext(image.filename)
 
-    image.save(os.path.join(os.getcwd() + '/../images', f'user1_1{image_extension}'))
-    image_path = os.getcwd() + '/../images/' + f'hi{image_extension}'
+    image.save(os.path.join(os.getcwd() + '/../images', f'user1_2{image_extension}'))
+    image_path = os.getcwd() + '/../images/' + f'user1_2{image_extension}'
     classify_from_image(image_path)
     
     return 'Hello, My First Flask!'
 
 def classify_from_image(image_path):
-    sys.argv = [image_path]
-    
-    with open("../SpeciesClassification/classify_images.py", "r") as classify:
-        code = classify.read()
-    
-    exec(code)
+
+    result = classify_images.run_model(image_path)
+    print(result)
     
     return 'Hello, My First Flask!'
 
