@@ -1,6 +1,6 @@
 from flask import Flask, request
 from firebase_admin import storage
-from flaskr.db import bucket
+from flaskr.db import bucket, species_map, collection
 import sys
 import os
 
@@ -17,7 +17,7 @@ def upload_image():
     image = request.files["image"]
     _, image_extension = os.path.splitext(image.filename)
 
-    image.save(os.path.join(os.getcwd() + '/../images', f'hi{image_extension}'))
+    image.save(os.path.join(os.getcwd() + '/../images', f'user1_1{image_extension}'))
     image_path = os.getcwd() + '/../images/' + f'hi{image_extension}'
     classify_from_image(image_path)
     
@@ -32,3 +32,14 @@ def classify_from_image(image_path):
     exec(code)
     
     return 'Hello, My First Flask!'
+
+@app.route('/api/maps', methods=['GET'])
+def get_species_map():
+    return species_map.get()
+
+@app.route('/api/collections', methods=['GET'])
+def get_user_collection():
+    user = request.args.get("user_id")
+    query = collection.order_by_child('user_id').equal_to("1")
+    result = query.get()
+    return result
