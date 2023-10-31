@@ -72,7 +72,7 @@ def fill_corrupted_files(filename, folder):
     corrupted_imgs = list(set(test_imgs) - set(df.filename))
 
     dummy_df = pd.DataFrame(
-        np.ones((44, 45), dtype=np.float) / 90, columns=df.columns[1:])
+        np.ones((44, 45), dtype=np.float32) / 90, columns=df.columns[1:])
     dummy_df.insert(loc=0, column='filename', value=corrupted_imgs)
 
     df = pd.concat([df, dummy_df])

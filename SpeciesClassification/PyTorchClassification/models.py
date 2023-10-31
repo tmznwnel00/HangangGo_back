@@ -381,11 +381,11 @@ class ClassificationModel(nn.Module):
             else:   pred_vals, pred_inds = output.data.topk(topK)
 
             if (self.useGPU):
-                pred_inds = pred_inds.cpu().numpy().astype(np.int)
-                pred_vals = pred_vals.cpu().numpy().astype(np.float)
+                pred_inds = pred_inds.cpu().numpy().astype(np.int32)
+                pred_vals = pred_vals.cpu().numpy().astype(np.float32)
             else:
-                pred_inds = pred_inds.numpy().astype(np.int)
-                pred_vals = pred_vals.numpy().astype(np.float)
+                pred_inds = pred_inds.numpy().astype(np.int32)
+                pred_vals = pred_vals.numpy().astype(np.float32)
 
             return pred_inds, pred_vals
 

@@ -549,9 +549,9 @@ def validate(val_loader, model, criterion, epoch, global_step, save_preds=False)
 
             if save_preds:
                 # store the top K classes for the prediction
-                im_ids.append(im_id.cpu().numpy().astype(np.int))
+                im_ids.append(im_id.cpu().numpy().astype(np.int32))
                 _, pred_inds = output.data.topk(3,1,True,True)
-                pred.append(pred_inds.cpu().numpy().astype(np.int))
+                pred.append(pred_inds.cpu().numpy().astype(np.int32))
 
             # measure accuracy and record loss
             prec1, prec3, prec5 = accuracy(output.data, target, topk=(1, 3, 5))
