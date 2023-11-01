@@ -30,7 +30,11 @@ def classify_from_image(image_path):
     result = classify_images.run_model(image_path)
     print(result)
     
-    return 'Hello, My First Flask!'
+    data = {
+        "result" : result[0][2]
+    }
+    
+    return data
 
 @app.route('/api/maps', methods=['GET'])
 def get_species_map():
