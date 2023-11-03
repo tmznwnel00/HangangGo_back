@@ -44,7 +44,7 @@ def upload_image():
     print(result)
 
     imageBlob = bucket.blob("/")
-    imageBlob = bucket.blob(result["name"])
+    imageBlob = bucket.blob(result["name"].replace(" ", "_"))
     imageBlob.upload_from_filename(image_path)
     
     return "Hello, My First Flask!"
@@ -84,6 +84,6 @@ def get_species_map():
 @app.route("/api/collections", methods=["GET"])
 def get_user_collection():
     user = request.args.get("user_id")
-    query = collection.order_by_child("user_id").equal_to("1")
+    query = collection.order_by_child("user_id").equal_to(1)
     result = query.get()
     return result
