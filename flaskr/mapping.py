@@ -1,4 +1,4 @@
-mapping_dict : {
+mapping_dict = {
     "black locust": {
         "category": "식물",
         "description": "길쭉한 열매 안에는 종자가 5-10개씩 들어있고 콩팥모양이다. 흰색의 꽃은 5-6월에 피고 향기가 강하다.",
