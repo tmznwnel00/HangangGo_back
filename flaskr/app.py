@@ -39,14 +39,14 @@ def upload_image():
         mapping_dict[result["name"]]["lat"] = 1
         mapping_dict[result["name"]]["lng"] = 1
         
-        data : {
+        data = {
             "res" : mapping_dict[result["name"]],
             "prob" : result["prob"]
         }
         return jsonify(data)
     
     else:
-        data : {
+        data = {
             "res" : result["name"],
             "prob" : result["prob"]
         }
