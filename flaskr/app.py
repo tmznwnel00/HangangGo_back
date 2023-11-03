@@ -21,7 +21,7 @@ def upload_image():
     # save image in firestore, and call function for classify speicies
     image = request.files["image"]
     _, image_extension = os.path.splitext(image.filename)
-    current_time = datetime.now().strftime("%Y-%m-%d-%H:%M:%S")
+    current_time = datetime.timestamp(datetime.now())
     image.save(os.path.join(os.getcwd() + "/../images", f"user1_{current_time}{image_extension}"))
     image_path = os.getcwd() + "/../images/" + f"user1_{current_time}{image_extension}"
     
