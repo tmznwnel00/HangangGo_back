@@ -32,6 +32,7 @@ def upload_image():
         
         imageBlob = bucket.blob("/")
         imageName = result["name"].replace(" ", "_")
+        imageName = result["name"].replace("-", "_")
         imageBlob = bucket.blob(imageName)
         imageBlob.upload_from_filename(image_path)
         mapping_dict[result["name"]]["createdAt"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
