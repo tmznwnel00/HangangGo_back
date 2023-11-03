@@ -47,7 +47,7 @@ def upload_image():
         imageBlob = bucket.blob(result["name"].replace(" ", "_"))
         imageBlob.upload_from_filename(image_path)
     
-    return "Hello, My First Flask!"
+    return jsonify(result)
 
 
 def classify_from_image(image_path):
@@ -55,10 +55,16 @@ def classify_from_image(image_path):
     print(result)
 
     if float(result[0][3]) < 0.6:
-        data = {"name": "Can not classify"}
+        data = {
+            "name": "Can not classify",
+            "prob": result[0][3]
+            }
     else:
         # should convert common name to korean name
-        data = {"name": result[0][2]}
+        data = {
+            "name": result[0][2],
+            "prob": result[0][3]
+            }
 
     return data
 
@@ -78,7 +84,7 @@ def get_species_map():
 
     data = {"species": result}
 
-    return data
+    return jsonify(data)
 
 
 @app.route("/api/collections", methods=["GET"])
