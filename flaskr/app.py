@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from firebase_admin import storage
 from flaskr.db import bucket, species_map, collection
 import sys
@@ -41,7 +41,7 @@ def upload_image():
             "createdAt": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "updatedAt": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
     }
-    print(result)
+    
 
     imageBlob = bucket.blob("/")
     imageBlob = bucket.blob(result["name"].replace(" ", "_"))
@@ -86,4 +86,5 @@ def get_user_collection():
     user = request.args.get("user_id")
     query = collection.order_by_child("user_id").equal_to(1)
     result = query.get()
-    return result
+    
+    return jsonify(result)
