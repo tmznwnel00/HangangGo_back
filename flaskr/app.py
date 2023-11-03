@@ -39,7 +39,7 @@ def upload_image():
         mapping_dict[result["name"]]["user_id"] = 1
         mapping_dict[result["name"]]["lat"] = 1
         mapping_dict[result["name"]]["lng"] = 1
-        mapping_dict[result["name"]]["imgLink"] = f"gs://hanganggo-88a45.appspot.com/{imageName}{image_extension}"
+        mapping_dict[result["name"]]["imgLink"] = f"gs://hanganggo-88a45.appspot.com/{imageName}"
         print(mapping_dict[result["name"]]["imgLink"])
         data = {
             "res" : mapping_dict[result["name"]],
