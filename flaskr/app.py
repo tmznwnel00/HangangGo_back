@@ -31,14 +31,16 @@ def upload_image():
     if result["name"] != "Can not classify":
         
         imageBlob = bucket.blob("/")
-        imageBlob = bucket.blob(result["name"].replace(" ", "_"))
+        imageName = result["name"].replace(" ", "_")
+        imageBlob = bucket.blob(imageName)
         imageBlob.upload_from_filename(image_path)
         mapping_dict[result["name"]]["createdAt"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         mapping_dict[result["name"]]["updatedAt"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         mapping_dict[result["name"]]["user_id"] = 1
         mapping_dict[result["name"]]["lat"] = 1
         mapping_dict[result["name"]]["lng"] = 1
-        
+        mapping_dict[result["name"]]["imgLink"] = f"gs://hanganggo-88a45.appspot.com/{imageName}{image_extension}"
+        print(mapping_dict[result["name"]]["imgLink"])
         data = {
             "res" : mapping_dict[result["name"]],
             "prob" : result["prob"]
