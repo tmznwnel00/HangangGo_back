@@ -41,11 +41,11 @@ def upload_image():
             "createdAt": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "updatedAt": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
     }
+    print(result)
 
     imageBlob = bucket.blob("/")
     imageBlob = bucket.blob(result["name"])
-    # imageBlob.upload_from_filename(image_path)
-    imageBlob.upload_from_string(image.read(), content_type=image.content_type)
+    imageBlob.upload_from_filename(image_path)
     
     return "Hello, My First Flask!"
 
