@@ -4,6 +4,7 @@ from flaskr.db import bucket, species_map, collection
 import sys
 import os
 from datetime import datetime
+from mapping import mapping_dict
 
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from SpeciesClassification import classify_images
@@ -28,26 +29,28 @@ def upload_image():
     result = classify_from_image(image_path)
     
     if result["name"] != "Can not classify":
-        collection_data = {
-                "user_id": 1,
-                "category": "식물",
-                "korean_name": result["name"],
-                "imgLink": "gs://hanganggo-88a45.appspot.com/Corydalis_incisa_pers.jpeg",
-                "remark": "기후변화 생물지표종",
-                "lat": 25,
-                "lng": 126,
-                "hangang_alphabet": "Q",
-                "description": "기후변화 생물지표종으로 긴 타원형의 뿌리에서 여러 대의 줄기가 나와 20-50cm까지 자란다. 잎은 3-8cm로 길고 작은 잎이 3장씩 2번 갈라져 나온다. 그늘지고 축축한 땅에서 자라고 5월에 홍자색 꽃을 피우고 4-12cm까지 자란다.",
-                "createdAt": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                "updatedAt": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        }
         
-
         imageBlob = bucket.blob("/")
         imageBlob = bucket.blob(result["name"].replace(" ", "_"))
         imageBlob.upload_from_filename(image_path)
+        mapping_dict[result["name"]]["createdAt"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        mapping_dict[result["name"]]["updatedAt"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        mapping_dict[result["name"]]["user_id"] = 1
+        mapping_dict[result["name"]]["lat"] = 1
+        mapping_dict[result["name"]]["lng"] = 1
+        
+        data : {
+            "res" : mapping_dict[result["name"]],
+            "prob" : result["prob"]
+        }
+        return jsonify(data)
     
-    return jsonify(result)
+    else:
+        data : {
+            "res" : result["name"],
+            "prob" : result["prob"]
+        }
+        return jsonify(data)
 
 
 def classify_from_image(image_path):
