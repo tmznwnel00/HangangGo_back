@@ -27,25 +27,25 @@ def upload_image():
     
     result = classify_from_image(image_path)
     
-    
-    collection_data = {
-            "user_id": 1,
-            "category": "식물",
-            "korean_name": result["name"],
-            "imgLink": "gs://hanganggo-88a45.appspot.com/Corydalis_incisa_pers.jpeg",
-            "remark": "기후변화 생물지표종",
-            "lat": 25,
-            "lng": 126,
-            "hangang_alphabet": "Q",
-            "description": "기후변화 생물지표종으로 긴 타원형의 뿌리에서 여러 대의 줄기가 나와 20-50cm까지 자란다. 잎은 3-8cm로 길고 작은 잎이 3장씩 2번 갈라져 나온다. 그늘지고 축축한 땅에서 자라고 5월에 홍자색 꽃을 피우고 4-12cm까지 자란다.",
-            "createdAt": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "updatedAt": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-    }
-    
+    if result["name"] != "Can not classify":
+        collection_data = {
+                "user_id": 1,
+                "category": "식물",
+                "korean_name": result["name"],
+                "imgLink": "gs://hanganggo-88a45.appspot.com/Corydalis_incisa_pers.jpeg",
+                "remark": "기후변화 생물지표종",
+                "lat": 25,
+                "lng": 126,
+                "hangang_alphabet": "Q",
+                "description": "기후변화 생물지표종으로 긴 타원형의 뿌리에서 여러 대의 줄기가 나와 20-50cm까지 자란다. 잎은 3-8cm로 길고 작은 잎이 3장씩 2번 갈라져 나온다. 그늘지고 축축한 땅에서 자라고 5월에 홍자색 꽃을 피우고 4-12cm까지 자란다.",
+                "createdAt": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "updatedAt": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        }
+        
 
-    imageBlob = bucket.blob("/")
-    imageBlob = bucket.blob(result["name"].replace(" ", "_"))
-    imageBlob.upload_from_filename(image_path)
+        imageBlob = bucket.blob("/")
+        imageBlob = bucket.blob(result["name"].replace(" ", "_"))
+        imageBlob.upload_from_filename(image_path)
     
     return "Hello, My First Flask!"
 
