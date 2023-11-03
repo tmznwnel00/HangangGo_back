@@ -5,7 +5,8 @@ from firebase_admin import storage
 from datetime import datetime
 
 cred = credentials.Certificate(
-    "hanganggo-88a45-firebase-adminsdk-97702-c4faccd7b0.json"
+    # "hanganggo-88a45-firebase-adminsdk-97702-c4faccd7b0.json"
+    "hanganggo-88a45-firebase-adminsdk-97702-1f415b24ed.json"
 )
 
 firebase_admin.initialize_app(
@@ -129,15 +130,15 @@ data = {
 }
 
 data2 = {
-    "category": "양서파충류",
-    "speciesName": "줄장지뱀",
+    "category": "식물",
+    "korean_name": "줄장지뱀",
     "imgLink": "gs://hanganggo-88a45.appspot.com/Takydromus_wolteri.jpeg",
-    "remark": "우점",
-    "lat": 25,
-    "lng": 126,
+    "remark": "서울시 보호종",
+    "location": "서울특별시 영등포구 여의공원로 68",
     "hangang_alphabet": "R",
+    "description" : "서울시 보호종으로 잎은 달걀 혹은 콩팥처럼 생겼다. 크기는 보통 길이 1.5-2.5cm, 너비 2-3cm로 끝은 둥글고 밑은 심장형이며 가장자리에 둔한 톱니가 있다. 꽃은4~5월에 연한 보라색으로 핀다.",
     "createdAt": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
     "updatedAt": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
 }
 
-species_map.push(data2)
+collection.push(data2)
