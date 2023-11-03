@@ -4,6 +4,7 @@ from flaskr.db import bucket, species_map, collection
 import sys
 import os
 from datetime import datetime
+import json
 
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from SpeciesClassification import classify_images
@@ -87,4 +88,4 @@ def get_user_collection():
     query = collection.order_by_child("user_id").equal_to(1)
     result = query.get()
     
-    return jsonify(result)
+    return json.dumps(result)
