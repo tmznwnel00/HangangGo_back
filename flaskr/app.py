@@ -4,7 +4,7 @@ from flaskr.db import bucket, species_map, collection
 import sys
 import os
 from datetime import datetime
-from mapping import mapping_dict
+import mapping
 
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from SpeciesClassification import classify_images
@@ -33,14 +33,14 @@ def upload_image():
         imageBlob = bucket.blob("/")
         imageBlob = bucket.blob(result["name"].replace(" ", "_"))
         imageBlob.upload_from_filename(image_path)
-        mapping_dict[result["name"]]["createdAt"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        mapping_dict[result["name"]]["updatedAt"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        mapping_dict[result["name"]]["user_id"] = 1
-        mapping_dict[result["name"]]["lat"] = 1
-        mapping_dict[result["name"]]["lng"] = 1
+        mapping.mapping_dict[result["name"]]["createdAt"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        mapping.mapping_dict[result["name"]]["updatedAt"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        mapping.mapping_dict[result["name"]]["user_id"] = 1
+        mapping.mapping_dict[result["name"]]["lat"] = 1
+        mapping.mapping_dict[result["name"]]["lng"] = 1
         
         data : {
-            "res" : mapping_dict[result["name"]],
+            "res" : mapping.mapping_dict[result["name"]],
             "prob" : result["prob"]
         }
         return jsonify(data)
