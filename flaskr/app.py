@@ -43,6 +43,9 @@ def upload_image():
             "res" : mapping_dict[result["name"]],
             "prob" : result["prob"]
         }
+        
+        collection.push(mapping_dict[result["name"]])
+        
         return jsonify(data)
     
     else:
