@@ -38,8 +38,6 @@ def upload_image():
         mapping_dict[result["name"]]["createdAt"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         mapping_dict[result["name"]]["updatedAt"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         mapping_dict[result["name"]]["user_id"] = 1
-        mapping_dict[result["name"]]["lat"] = 1
-        mapping_dict[result["name"]]["lng"] = 1
         mapping_dict[result["name"]]["imgLink"] = f"gs://hanganggo-88a45.appspot.com/{imageName}"
         print(mapping_dict[result["name"]]["imgLink"])
         data = {
@@ -48,6 +46,13 @@ def upload_image():
         }
         
         collection.push(mapping_dict[result["name"]])
+        
+        map_data = mapping_dict[result["name"]]
+        del map_data["description"]
+        del map_data["user_id"]
+        map_data["speciesName"] = map_data.pop("korean_name")
+        print(map_data)
+        species_map.push(map_data)
         
         return jsonify(data)
     
