@@ -4,7 +4,7 @@ from flaskr.db import bucket, species_map, collection
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
-from SpeciesClassification import classify_images
+# from SpeciesClassification import classify_images
 
 app = Flask(__name__)
 
@@ -38,7 +38,23 @@ def classify_from_image(image_path):
 
 @app.route('/api/maps', methods=['GET'])
 def get_species_map():
-    return species_map.get()
+    
+    query = species_map.get()
+    val = query.values()
+    result = []
+    for specie in val:
+        if "hangang_alphabet" not in specie:
+            continue
+        if "imgLink" not in specie:
+            continue
+        if specie["hangang_alphabet"] in ["S", "R", "Q", "P", "O", "N", "M2", "M1"]:
+            result.append(specie)
+
+    data = {
+        "species" : result
+    }
+    
+    return data
 
 @app.route('/api/collections', methods=['GET'])
 def get_user_collection():
